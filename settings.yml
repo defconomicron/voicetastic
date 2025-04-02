@@ -1,0 +1,11 @@
+voice_service: Google
+host: 192.168.1.18
+node:
+  long_name: ADAM - MOBILE
+meshtastic:
+  path: meshtastic
+channels:
+  0: LongFast
+  1: OKieCorral
+  2: Trivia
+  3: Test

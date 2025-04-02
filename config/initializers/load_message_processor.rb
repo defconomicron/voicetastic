@@ -1,0 +1,1 @@
+MESSAGE_PROCESSOR = MessageProcessor.new.process

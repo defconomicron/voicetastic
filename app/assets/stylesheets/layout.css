@@ -1,0 +1,14 @@
+body {background-color:black;color:white;margin:1em;font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+#mic-toggle {cursor:pointer}
+ul li {list-style-type:none;padding:1em}
+ul {padding:0}
+@media all and (min-width:960px) {
+  body {margin:0 30% 0 30% !important}
+}
+h1 {text-align:center;font-weight:bold;font-size:3em}
+#mic-toggle {padding:3em;text-align:center}
+#mic-toggle svg {font-size:8em}
+#ch_index {width:100%;margin-bottom:1em;padding:0.5em}
+#messages li {cursor:pointer}
+#messages li.even {background-color:#333333}
+#messages li:hover {background-color:#BB0000}

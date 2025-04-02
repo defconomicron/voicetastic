@@ -1,0 +1,53 @@
+<h1>Voicetastic</h1>
+<div id='mic-toggle'>
+  <i class='fa fa-microphone'></i>
+</div>
+<select id='ch_index'>
+  <% @channels.each do |ch_index, name| %>
+    <option value='<%= ch_index %>'><%= ch_index %> - <%= name %></option>
+  <% end %>
+</select>
+<script>
+  // https://github.com/nibab-boo/medium_google_speech_api/blob/master/app/views/pages/home.html.erb
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    const micToggle = document.querySelector('#mic-toggle');
+    const micIcon = document.querySelector('.fa-microphone');
+    const audioChunks = [];
+    let mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.addEventListener('dataavailable', (event) => {
+      audioChunks.push(event.data);
+    });
+    mediaRecorder.addEventListener('stop', () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/flac' })
+      audioChunks.length = 0;
+      const formData = new FormData();
+      formData.append('files', audioBlob);
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      const source = document.createElement('source');
+      source.src = URL.createObjectURL(audioBlob);
+      audio.appendChild(source);
+      console.log(audio);
+      const crsfToken = document.querySelector('meta[name="csrf-token"]').content;
+      console.log(crsfToken);
+      formData.append('ch_index', document.querySelector('#ch_index').selectedIndex);
+      fetch('/main/upload', {
+        method: 'POST',
+        headers: {'X-CSRF-Token': crsfToken },
+        body: formData
+      })
+    });
+    micToggle.addEventListener('click', ()=> {
+      console.log(mediaRecorder.state);
+      if (mediaRecorder.state == 'inactive') {
+        mediaRecorder.start();
+        micIcon.style.color = 'red';
+      } else {
+        mediaRecorder.stop();
+        micIcon.style.color = 'white';
+      }
+    });
+  });
+</script>
+<%= turbo_stream_from 'Messages' %>
+<ul id='messages'></ul>
