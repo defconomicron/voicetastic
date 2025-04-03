@@ -1,1 +1,0 @@
-$message_processor = MessageProcessor.new.process

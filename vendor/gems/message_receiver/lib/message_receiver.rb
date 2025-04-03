@@ -84,7 +84,9 @@ class MessageReceiver
   end
 
   def log(str, color = :black)
-    $log_it.log "MessageReceiver: #{str}", color
+    str = "MessageReceiver: #{str}"
+    $log_it.log str, color
+    $message_broadcaster.broadcast(message: str)
   end
 
   def get_value(str, key)
