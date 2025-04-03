@@ -11,13 +11,13 @@ class MessageTransmitter
 
   def transmit(ch_index: nil, message: nil)
     raise Exception.new('ch_index not defined') if ch_index.blank?
-    log "Placing MessageReceiver on hold..."
+    log 'Placing MessageReceiver on hold...'
     $message_receiver.hold = true
     begin
-      log "Killing MessageReceiver..."
+      log 'Killing MessageReceiver...'
       $message_receiver.kill
     rescue
-      log "Attempting to kill MessageReceiver again..."
+      log 'Attempting to kill MessageReceiver again...'
       retry
     end
     @retries = 2
@@ -33,7 +33,7 @@ class MessageTransmitter
         retry
       end
     end
-    log "Releasing MessageReceiver hold..."
+    log 'Releasing MessageReceiver hold...'
     $message_receiver.hold = false
     self
   end
