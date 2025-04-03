@@ -3,7 +3,7 @@ class MessageBroadcaster
   end
 
   def broadcast(ch_index: nil, message: nil, node: nil, voice: nil)
-    channel_name = ch_index.present? ? SETTINGS['channels'][ch_index.to_i] : nil
+    channel_name = ch_index.present? ? $settings['channels'][ch_index.to_i] : nil
     tokens1 = []
     tokens1 << "[#{channel_name}]" if channel_name.present?
     tokens1 << "&lt;#{node.nil? ? 'SYSTEM' : node.name}&gt;"

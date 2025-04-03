@@ -4,6 +4,11 @@ PATH
     li_element (0.0.1)
 
 PATH
+  remote: vendor/gems/log_it
+  specs:
+    log_it (0.0.1)
+
+PATH
   remote: vendor/gems/message_broadcaster
   specs:
     message_broadcaster (0.0.1)
@@ -27,6 +32,11 @@ PATH
   remote: vendor/gems/text_to_voice
   specs:
     text_to_voice (0.0.1)
+
+PATH
+  remote: vendor/gems/time_utilities
+  specs:
+    time_utilities (0.0.1)
 
 PATH
   remote: vendor/gems/voice_to_text
@@ -525,6 +535,7 @@ DEPENDENCIES
   jquery-rails (~> 4.6)
   kamal
   li_element!
+  log_it!
   meshtastic
   message_broadcaster!
   message_processor!
@@ -543,6 +554,7 @@ DEPENDENCIES
   stimulus-rails
   text_to_voice!
   thruster
+  time_utilities!
   turbo-rails
   tzinfo-data
   voice_to_text!

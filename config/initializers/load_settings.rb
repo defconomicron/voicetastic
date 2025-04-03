@@ -1,1 +1,1 @@
-SETTINGS = YAML.load_file('settings.yml') rescue {}
+$settings = YAML.load_file('settings.yml') rescue {}

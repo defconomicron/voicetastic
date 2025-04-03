@@ -1,1 +1,1 @@
-MESSAGE_PROCESSOR = MessageProcessor.new.process
+$message_processor = MessageProcessor.new.process

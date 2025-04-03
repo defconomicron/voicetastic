@@ -1,1 +1,1 @@
-MESSAGE_BROADCASTER = MessageBroadcaster.new
+$message_broadcaster = MessageBroadcaster.new

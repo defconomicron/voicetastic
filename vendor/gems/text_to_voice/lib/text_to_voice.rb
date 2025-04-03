@@ -4,7 +4,7 @@ class TextToVoice
   end
 
   def voice
-    if SETTINGS['voice_service'] == 'Google'
+    if $settings['voice_service'] == 'Google'
       # gcloud auth login
       # gcloud config set project astute-charter-455419-r3
       # https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-additional-langs

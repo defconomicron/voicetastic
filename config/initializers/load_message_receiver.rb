@@ -1,1 +1,1 @@
-MESSAGE_RECEIVER = MessageReceiver.new
+$message_receiver = MessageReceiver.new

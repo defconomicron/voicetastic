@@ -5,18 +5,19 @@ class MessageProcessor
   def process
     Thread.new {
       @time = 0
-      MESSAGE_RECEIVER.try(:receive) do |message|
-        puts message
+      $message_receiver.try(:receive) do |message|
+        # puts message
         if message.is_a?(String)
-          MESSAGE_BROADCASTER.broadcast(message: message)
+          $message_broadcaster.broadcast(message: message)
           next
         end
         node = Node.where(number: message['from']).first_or_initialize
         case message['portnum']
           when 'TEXT_MESSAGE_APP'
+            log message, :yellow
             if @time < message['time'].to_i
               puts "#{message}".colorize(:yellow)
-              MESSAGE_BROADCASTER.broadcast(ch_index: message['channel'], message: message['payload'], node: node, voice: true)
+              $message_broadcaster.broadcast(ch_index: message['channel'], message: message['payload'], node: node, voice: true)
               @time = message['time'].to_i
             end
           when 'POSITION_APP'
@@ -31,4 +32,10 @@ class MessageProcessor
     }
     self
   end
+
+  private
+
+    def log(text, color = nil)
+      $log_it.log "MessageProcessor: #{text}", color
+    end
 end

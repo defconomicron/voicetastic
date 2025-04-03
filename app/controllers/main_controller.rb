@@ -1,6 +1,6 @@
 class MainController < ApplicationController
   def index
-    @channels = SETTINGS['channels']
+    @channels = $settings['channels']
   end
 
   def upload
@@ -8,14 +8,14 @@ class MainController < ApplicationController
     File.write(path, params[:files].read, mode: 'wb')
     text = VoiceToText.new(path).text
     if text.blank?
-      MESSAGE_BROADCASTER.broadcast(message: 'No voice was detected.')
+      $message_broadcaster.broadcast(message: 'No voice was detected.')
     else
-      MESSAGE_RECEIVER.hold = true
-      MESSAGE_RECEIVER.kill
-      node = Node.new(long_name: SETTINGS['node']['long_name'])
-      MESSAGE_BROADCASTER.broadcast(ch_index: params[:ch_index], message: text, node: node)
-      MESSAGE_TRANSMITTER.transmit(ch_index: params[:ch_index], message: text)
-      MESSAGE_RECEIVER.hold = false
+      $message_receiver.hold = true
+      $message_receiver.kill
+      node = Node.new(long_name: $settings['node']['long_name'])
+      $message_broadcaster.broadcast(ch_index: params[:ch_index], message: text, node: node)
+      $message_transmitter.transmit(ch_index: params[:ch_index], message: text)
+      $message_receiver.hold = false
     end
     render json: {data: {text: text}}.to_json
   end

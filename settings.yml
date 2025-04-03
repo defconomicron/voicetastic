@@ -1,5 +1,6 @@
 voice_service: Google
 host: 192.168.1.18
+max_text_length: 229
 node:
   long_name: ADAM - MOBILE
 meshtastic:

@@ -1,1 +1,1 @@
-MESSAGE_TRANSMITTER = MessageTransmitter.new
+$message_transmitter = MessageTransmitter.new
