@@ -7,6 +7,8 @@ class TextToVoice
     if $settings['voice_service'] == 'Google'
       # gcloud auth login
       # gcloud config set project astute-charter-455419-r3
+      # gcloud init
+      # gcloud auth application-default login
       # https://cloud.google.com/text-to-speech/docs/create-audio#text-to-speech-text-additional-langs
       response = `curl -X POST -H "Content-Type: application/json" \
       -H "X-Goog-User-Project: $(gcloud config list --format='value(core.project)')" \
