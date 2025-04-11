@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Create a settings.yml file at the root of this project:
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+voice_service: Google
+host: 192.168.1.18
+max_text_length: 229
+node:
+  long_name: ADAM - BASE
+meshtastic:
+  path: meshtastic
+channels:
+  0: LongFast
+  1: OKieCorral
+  2: Trivia
+  3: Test
