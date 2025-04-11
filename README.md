@@ -2,26 +2,26 @@
 
 Create a settings.yml file at the root of this project:
 
-voice_service: Google
+  voice_service: Google
 
-host: 192.168.1.18
+  host: 192.168.1.18
 
-max_text_length: 229
+  max_text_length: 229
 
-node:
+  node:
 
-    long_name: ADAM - BASE
+      long_name: ADAM - BASE
 
-meshtastic:
+  meshtastic:
 
-    path: meshtastic
+      path: meshtastic
 
-channels:
+  channels:
 
-    0: LongFast
+      0: LongFast
 
-    1: OKieCorral
+      1: OKieCorral
 
-    2: Trivia
+      2: Trivia
 
-    3: Test
+      3: Test
