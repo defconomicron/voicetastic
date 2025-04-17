@@ -4,15 +4,8 @@ class MessageTransmitter
 
   def transmit(ch_index: nil, message: nil)
     raise Exception.new('ch_index not defined') if ch_index.blank?
-    log 'Placing MessageReceiver on hold...'
-    $message_receiver.hold = true
-    begin
-      log 'Killing MessageReceiver...'
-      $message_receiver.kill
-    rescue
-      log 'Attempting to kill MessageReceiver again...'
-      retry
-    end
+    hold_message_receiver
+    kill_message_receiver
     @retries = 2
     begin
       cmd = "#{meshtastic_cli_path} --host #{host} --ch-index #{ch_index} --no-time --ack --sendtext \"#{sanitize(message)}\""
@@ -26,12 +19,31 @@ class MessageTransmitter
         retry
       end
     end
-    log 'Releasing MessageReceiver hold...'
-    $message_receiver.hold = false
+    release_message_receiver
     self
   end
 
   private
+
+    def hold_message_receiver
+      log 'Placing MessageReceiver on hold...'
+      $message_receiver.hold = true
+    end
+
+    def kill_message_receiver
+      begin
+        log 'Killing MessageReceiver...'
+        $message_receiver.kill
+      rescue
+        log 'Attempting to kill MessageReceiver again...'
+        retry
+      end
+    end
+
+    def release_message_receiver
+      log 'Releasing MessageReceiver hold...'
+      $message_receiver.hold = false
+    end
 
     def execute_cmd(cmd)
       response = []
