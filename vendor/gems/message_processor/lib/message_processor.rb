@@ -6,7 +6,6 @@ class MessageProcessor
     Thread.new {
       @time = 0
       $message_receiver.try(:receive) do |message|
-        # puts message
         node = Node.where(number: message['from']).first_or_initialize
         case message['portnum']
           when 'TEXT_MESSAGE_APP'
