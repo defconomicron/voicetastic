@@ -8,7 +8,7 @@ class MessageProcessor
         node = number_to_node(message['from'])
         case message['portnum']
           when 'TEXT_MESSAGE_APP'
-            broadcast(message: message, node: node)
+            broadcast(message, node)
           when 'POSITION_APP'
             node.position_snapshot = message.to_json
           when 'TELEMETRY_APP'
@@ -24,7 +24,7 @@ class MessageProcessor
 
   private
 
-    def broadcast(message: {}, node: nil)
+    def broadcast(message, node)
       log message, :yellow
       @time ||= 0
       if @time < message['time'].to_i
