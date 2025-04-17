@@ -17,17 +17,13 @@ class MessageReceiver
 
   def receive(&block)
     begin
-      log 'Holding...' if @hold
-      while @hold;sleep 1;end
-      cmd = "#{meshtastic_cli_path} --host #{host} --listen"
-      log cmd, :yellow
-      PTY.spawn(cmd) do |stdout, stdin, pid|
+      perform_hold
+      PTY.spawn(meshtastic_cli_cmd) do |stdout, stdin, pid|
         @pid = pid
         response = ''
         stdout.each do |line|
-          # log line, :black
-          raise Exception.new(line) if error?(line)
-          if response.blank? || !(line =~ /DEBUG/) # && line =~ /packet/)
+          throw_error(line)
+          if response.blank? || !(line =~ /DEBUG/)
             response << line << "\n"
             next
           end
@@ -71,16 +67,31 @@ class MessageReceiver
         end
       end
     rescue Exception => e
-      log "Exception: #{e} #{e.backtrace}", :red
-      if "#{e}" =~ /No such file or directory/
-        broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
-      elsif "#{e}" =~ /output error @ io_fillbuf/
-        broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
-      end
-      log 'Restarting due to exception...'
+      report_exception(e)
       retry
     end
     self
+  end
+
+  def report_exception(e)
+    log "Exception: #{e} #{e.backtrace}", :red
+    if "#{e}" =~ /No such file or directory/
+      broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
+    elsif "#{e}" =~ /output error @ io_fillbuf/
+      broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
+    end
+    log 'Restarting due to exception...'
+  end
+
+  def perform_hold
+    log 'Holding...' if @hold
+    while @hold;sleep 1;end
+  end
+
+  def meshtastic_cli_cmd
+    str = "#{meshtastic_cli_path} --host #{host} --listen"
+    log str, :yellow
+    str
   end
 
   def log(str, color = :black)
@@ -90,6 +101,10 @@ class MessageReceiver
 
   def get_value(str, key)
     str.scan(/#{key}: ['"]*(.*?)['"]*([,}\r]|$)/).flatten.first.strip.force_encoding('UTF-8') rescue nil
+  end
+
+  def throw_error(line)
+    raise Exception.new(line) if error?(line)
   end
 
   def error?(str)
