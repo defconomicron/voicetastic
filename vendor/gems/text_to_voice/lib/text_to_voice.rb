@@ -26,6 +26,8 @@ class TextToVoice
       }
       }' "https://texttospeech.googleapis.com/v1/text:synthesize"`
       response = JSON.parse(response)
+      error = response['error']['message'] rescue nil
+      broadcast("ERROR: #{error}") if error.present?
       require 'base64'
       File.write('public/output.mp3', Base64.decode64(response['audioContent']), mode: 'wb')
     else
@@ -37,5 +39,9 @@ class TextToVoice
 
   def google_voice
     Variable.where(name: 'google_voice').first_or_initialize.value
+  end
+
+  def broadcast(str)
+    $message_broadcaster.broadcast(message: str)
   end
 end

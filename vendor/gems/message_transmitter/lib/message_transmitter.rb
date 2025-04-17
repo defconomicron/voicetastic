@@ -66,7 +66,7 @@ class MessageTransmitter
     end
 
     def max_text_length
-      Variable.where(name: 'max_text_length').first_or_initialize.value
+      Variable.where(name: 'max_text_length').first_or_initialize.value.to_i
     end
   
     def meshtastic_cli_path
