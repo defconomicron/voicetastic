@@ -73,9 +73,9 @@ class MessageReceiver
     rescue Exception => e
       log "Exception: #{e} #{e.backtrace}", :red
       if "#{e}" =~ /No such file or directory/
-        broadcast_sleep_retry('ERROR: Could not find Meshtastic CLI Path.')
+        broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
       elsif "#{e}" =~ /output error @ io_fillbuf/
-        broadcast_sleep_retry('ERROR: Failed to connect to node at the specified IP address.')
+        broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
       end
       log 'Restarting due to exception...'
       retry
@@ -109,10 +109,10 @@ class MessageReceiver
     $message_broadcaster.broadcast(message: str)
   end
 
-  def broadcast_sleep_retry(str)
+  def broadcast_sleep_30_retry(str)
     broadcast(str)
-    $message_broadcaster.broadcast(message: 'Sleeping for 30 seconds...')
+    broadcast('Sleeping for 30 seconds...')
     sleep 30
-    $message_broadcaster.broadcast(message: 'Attempting to retry...')
+    broadcast('Attempting to retry...')
   end
 end
