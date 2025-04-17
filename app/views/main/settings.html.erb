@@ -1,0 +1,49 @@
+<div id='forward_button'>
+  <a href='/'><i class='fa fa-arrow-right'></i></a>
+</div>
+<h2>Settings</h2>
+<br />
+<label for='google_voice'>Google Voice:</label>
+<select id='google_voice' name='google_voice'>
+  <%= options_for_select(%w{Aoede Puck Charon Kore Fenrir Leda Orus Zephyr}, @google_voice.value) %>
+</select>
+<br />
+<label for='ip_address'>IP Address:</label><br />
+<input id='ip_address' name='ip_address' type='text' value='<%= @ip_address.value %>' />
+<br />
+<label for='long_name'>Long Name:</label><br />
+<input id='long_name' name='long_name' type='text' value='<%= @long_name.value %>' />
+<br />
+<label for='meshtastic_cli_path'>Meshtastic CLI Path:</label><br />
+<input id='meshtastic_cli_path' name='meshtastic_cli_path' type='text' value='<%= @meshtastic_cli_path.value %>' />
+<br />
+<label for='max_text_length'>Max Text Length:</label><br />
+<input id='max_text_length' name='max_text_length' type='text' value='<%= @max_text_length.value %>' />
+<br />
+<label for='channels'>Channels:</label><br />
+<textarea id='channels' name='channels'><%= @channels.value %></textarea>
+<script>
+  function control_change() {
+    $('*').unbind('change').change(function(){
+      post_form($('body').find('*').serializeArray());
+    });
+  }
+  function post_form(form_data) {
+    $.ajax({
+      url:'/settings',
+      data:form_data,
+      dataType:'html',
+      type:'post'
+    }).done(function(data){
+      console.log(data);
+      setTimeout(function() {page_functions();}, 100);
+    }).fail(function (jqXHR, textStatus, error) {
+      console.log('FAIL!!!');console.log(jqXHR);console.log(textStatus);console.log(error);
+    });
+  }
+  function page_functions() {
+    control_change();
+  }
+  if (document.readyState !== 'loading') page_functions();
+  else document.addEventListener("DOMContentLoaded", function(event) {page_functions()});
+</script>

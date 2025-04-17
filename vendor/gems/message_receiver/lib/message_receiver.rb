@@ -4,11 +4,6 @@ class MessageReceiver
   attr_accessor :pid, :hold
 
   def initialize
-    raise Exception.new('settings.yml not defined') if $settings.blank?
-    @meshtastic_path = $settings['meshtastic']['path'] rescue nil
-    raise Exception.new('meshtastic => path not defined') if @meshtastic_path.blank?
-    @host = $settings['host'] rescue nil
-    raise Exception.new('host not defined') if @meshtastic_path.blank?
   end
 
   def kill
@@ -24,7 +19,7 @@ class MessageReceiver
     begin
       log 'Holding...' if @hold
       while @hold;sleep 1;end
-      cmd = "#{@meshtastic_path} --host #{@host} --listen"
+      cmd = "#{meshtastic_cli_path} --host #{host} --listen"
       log cmd, :yellow
       PTY.spawn(cmd) do |stdout, stdin, pid|
         @pid = pid
@@ -77,6 +72,8 @@ class MessageReceiver
       end
     rescue Exception => e
       log "Exception: #{e} #{e.backtrace}", :red
+      broadcast_sleep_retry('ERROR: Could not find Meshtastic CLI.') if "#{e}" =~ /No such file or directory/
+      broadcast_sleep_retry('ERROR: Node not found at IP Address') if "#{e}" =~ /output error @ io_fillbuf/
       log 'Restarting due to exception...'
       retry
     end
@@ -96,5 +93,20 @@ class MessageReceiver
   def error?(str)
     str =~ /connection reset by peer/i ||
     str =~ /broken pipe/i
+  end
+
+  def meshtastic_cli_path
+    Variable.where(name: 'meshtastic_cli_path').first_or_initialize.value
+  end
+
+  def host
+    Variable.where(name: 'ip_address').first_or_initialize.value
+  end
+
+  def broadcast_sleep_retry(str)
+    $message_broadcaster.broadcast(message: str)
+    $message_broadcaster.broadcast(message: 'Sleeping for 30 seconds...')
+    sleep 30
+    $message_broadcaster.broadcast(message: 'Attempting to retry...')
   end
 end

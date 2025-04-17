@@ -11,5 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "main#index"
-  post 'main/upload' => 'main#upload'
+  post 'upload' => 'main#upload'
+  post 'settings' => 'main#settings'
+  get 'settings' => 'main#settings'
 end

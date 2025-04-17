@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_01_203740) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_16_155743) do
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -32,5 +32,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_203740) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "ignored_at"
+  end
+
+  create_table "variables", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_variables_on_name"
   end
 end

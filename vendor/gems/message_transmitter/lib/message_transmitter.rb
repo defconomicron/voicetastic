@@ -1,12 +1,5 @@
 class MessageTransmitter
   def initialize
-    raise Exception.new('settings.yml not defined') if $settings.blank?
-    @meshtastic_path = $settings['meshtastic']['path'] rescue nil
-    raise Exception.new('meshtastic => path not defined') if @meshtastic_path.blank?
-    @host = $settings['host'] rescue nil
-    raise Exception.new('host not defined') if @host.blank?
-    @max_text_length = $settings['max_text_length'] rescue nil
-    raise Exception.new('max_text_length not defined') if @max_text_length.blank?
   end
 
   def transmit(ch_index: nil, message: nil)
@@ -22,7 +15,7 @@ class MessageTransmitter
     end
     @retries = 2
     begin
-      cmd = "#{@meshtastic_path} --host #{@host} --ch-index #{ch_index} --no-time --ack --sendtext \"#{sanitize(message)}\""
+      cmd = "#{meshtastic_cli_path} --host #{host} --ch-index #{ch_index} --no-time --ack --sendtext \"#{sanitize(message)}\""
       log cmd, :yellow
       execute_cmd(cmd)
     rescue Exception => e
@@ -69,6 +62,18 @@ class MessageTransmitter
     end
 
     def sanitize(str)
-      "#{str}".gsub('"',"'").gsub("\n",'').gsub("\r",'')[0..(@max_text_length-1)]
+      "#{str}".gsub('"',"'").gsub("\n",'').gsub("\r",'')[0..(max_text_length-1)]
+    end
+
+    def max_text_length
+      Variable.where(name: 'max_text_length').first_or_initialize.value
+    end
+  
+    def meshtastic_cli_path
+      Variable.where(name: 'meshtastic_cli_path').first_or_initialize.value
+    end
+  
+    def host
+      Variable.where(name: 'ip_address').first_or_initialize.value
     end
 end

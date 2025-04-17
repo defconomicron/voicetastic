@@ -1,10 +1,12 @@
-<h1>Voicetastic</h1>
+<div id='settings_button'>
+  <a href='/settings'><i class='fa fa-bars'></i></a>
+</div>
 <div id='mic-toggle'>
   <i class='fa fa-microphone'></i>
 </div>
 <select id='ch_index'>
-  <% @channels.each do |ch_index, name| %>
-    <option value='<%= ch_index %>'><%= ch_index %> - <%= name %></option>
+  <% @channels.each_with_index do |name, i| %>
+    <option value='<%= i %>'><%= i %> - <%= name %></option>
   <% end %>
 </select>
 <script>
@@ -31,7 +33,7 @@
       const crsfToken = document.querySelector('meta[name="csrf-token"]').content;
       console.log(crsfToken);
       formData.append('ch_index', document.querySelector('#ch_index').selectedIndex);
-      fetch('/main/upload', {
+      fetch('/upload', {
         method: 'POST',
         headers: {'X-CSRF-Token': crsfToken },
         body: formData

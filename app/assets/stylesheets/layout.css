@@ -1,4 +1,4 @@
-body {background-color:black;color:white;margin:1em;font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+body {position:relative;background-color:black;color:white;margin:1em;font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
 #mic-toggle {cursor:pointer}
 ul li {list-style-type:none;padding:1em}
 ul {padding:0}
@@ -9,6 +9,21 @@ h1 {text-align:center;font-weight:bold;font-size:3em}
 #mic-toggle {padding:3em;text-align:center}
 #mic-toggle svg {font-size:8em}
 #ch_index {width:100%;margin-bottom:1em;padding:0.5em}
+#google_voice {width:100%;margin-bottom:1em;padding:0.5em}
+#ip_address {width:100%;margin-bottom:1em;padding:0.5em}
+#long_name {width:100%;margin-bottom:1em;padding:0.5em}
+#meshtastic_cli_path {width:100%;margin-bottom:1em;padding:0.5em}
+#max_text_length {width:100%;margin-bottom:1em;padding:0.5em}
+#channels {width:100%;margin-bottom:1em;padding:0.5em;height:200px}
 #messages li {cursor:pointer}
 #messages li.even {background-color:#333333}
 #messages li:hover {background-color:#BB0000}
+div.left {float:left}
+div.right {float:right}
+div.clear {clear:both}
+#settings_button {font-size:2em;position:absolute;right:0;top:0.5em;cursor:pointer}
+#settings_button a {color:white}
+#back_button {font-size:2em;position:absolute;left:0;top:0.5em;cursor:pointer}
+#back_button a {color:white}
+#forward_button {font-size:2em;position:absolute;right:0;top:0.5em;cursor:pointer}
+#forward_button a {color:white}
