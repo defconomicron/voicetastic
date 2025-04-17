@@ -4,17 +4,11 @@ class MessageProcessor
 
   def process
     Thread.new {
-      @time = 0
       $message_receiver.try(:receive) do |message|
-        node = Node.where(number: message['from']).first_or_initialize
+        node = number_to_node(message['from'])
         case message['portnum']
           when 'TEXT_MESSAGE_APP'
-            log message, :yellow
-            if @time < message['time'].to_i
-              puts "#{message}".colorize(:yellow)
-              $message_broadcaster.broadcast(ch_index: message['channel'], message: message['payload'], node: node, voice: true)
-              @time = message['time'].to_i
-            end
+            broadcast(message: message, node: node)
           when 'POSITION_APP'
             node.position_snapshot = message.to_json
           when 'TELEMETRY_APP'
@@ -29,6 +23,19 @@ class MessageProcessor
   end
 
   private
+
+    def broadcast(message: {}, node: nil)
+      log message, :yellow
+      @time ||= 0
+      if @time < message['time'].to_i
+        $message_broadcaster.broadcast(ch_index: message['channel'], message: message['payload'], node: node, voice: true)
+        @time = message['time'].to_i
+      end
+    end
+
+    def number_to_node(number)
+      Node.where(number: number).first_or_initialize
+    end
 
     def log(text, color = nil)
       $log_it.log "MessageProcessor: #{text}", color
