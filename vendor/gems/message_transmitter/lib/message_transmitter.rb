@@ -22,7 +22,7 @@ class MessageTransmitter
       log "#{e} #{e.backtrace}", :red
       if @retries > 0
         @retries -= 1
-        log "Retrying [remaining: #{@retries}]"
+        log "Retrying [remaining: #{@retries}]", :yellow
       end
       @retries > 0
     end
