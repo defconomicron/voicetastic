@@ -3,27 +3,37 @@ class MessageTransmitter
   end
 
   def transmit(ch_index: nil, message: nil)
-    raise Exception.new('ch_index not defined') if ch_index.blank?
+    ensure_ch_index(ch_index)
     hold_message_receiver
     kill_message_receiver
     @retries = 2
     begin
-      cmd = "#{meshtastic_cli_path} --host #{host} --ch-index #{ch_index} --no-time --ack --sendtext \"#{sanitize(message)}\""
-      log cmd, :yellow
-      execute_cmd(cmd)
+      send_text(ch_index, message)
     rescue Exception => e
-      log "#{e} #{e.backtrace}", :red
-      if @retries > 0
-        @retries -= 1
-        log "Retrying [remaining: #{@retries}]: #{cmd}"
-        retry
-      end
+      retry if retry?(e)
     end
     release_message_receiver
     self
   end
 
   private
+
+    def retry?(e)
+      log "#{e} #{e.backtrace}", :red
+      if @retries > 0
+        @retries -= 1
+        log "Retrying [remaining: #{@retries}]"
+      end
+      @retries > 0
+    end
+
+    def send_text(ch_index, message)
+      execute_cmd("#{meshtastic_cli_path} --host #{host} --ch-index #{ch_index} --no-time --ack --sendtext \"#{sanitize(message)}\"")
+    end
+
+    def ensure_ch_index(ch_index)
+      raise Exception.new('ch_index not defined') if ch_index.blank?
+    end
 
     def hold_message_receiver
       log 'Placing MessageReceiver on hold...'
@@ -46,6 +56,7 @@ class MessageTransmitter
     end
 
     def execute_cmd(cmd)
+      log cmd, :yellow
       response = []
       begin
         PTY.spawn(cmd) do |stdout, stdin, pid|
