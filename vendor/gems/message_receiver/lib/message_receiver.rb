@@ -6,15 +6,6 @@ class MessageReceiver
   def initialize
   end
 
-  def kill
-    if @pid.present?
-      cmd = "kill -9 #{@pid}"
-      log cmd, :yellow
-      `#{cmd}`
-      @pid = nil
-    end
-  end
-
   def receive(&block)
     begin
       perform_hold
@@ -73,61 +64,72 @@ class MessageReceiver
     self
   end
 
-  def report_exception(e)
-    log "Exception: #{e} #{e.backtrace}", :red
-    if "#{e}" =~ /No such file or directory/
-      broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
-    # elsif "#{e}" =~ /output error @ io_fillbuf/
-      # broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
+  def kill
+    if @pid.present?
+      cmd = "kill -9 #{@pid}"
+      log cmd, :yellow
+      `#{cmd}`
+      @pid = nil
     end
-    log 'Restarting due to exception...'
   end
 
-  def perform_hold
-    log 'Holding...' if @hold
-    while @hold;sleep 1;end
-  end
+  private
 
-  def meshtastic_cli_cmd
-    str = "#{meshtastic_cli_path} --host #{host} --listen"
-    log str, :yellow
-    str
-  end
+    def report_exception(e)
+      log "Exception: #{e} #{e.backtrace}", :red
+      if "#{e}" =~ /No such file or directory/
+        broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
+      # elsif "#{e}" =~ /output error @ io_fillbuf/
+        # broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
+      end
+      log 'Restarting due to exception...'
+    end
 
-  def log(str, color = :black)
-    str = "MessageReceiver: #{str}"
-    $log_it.log str, color
-  end
+    def perform_hold
+      log 'Holding...' if @hold
+      while @hold;sleep 1;end
+    end
 
-  def get_value(str, key)
-    str.scan(/#{key}: ['"]*(.*?)['"]*([,}\r]|$)/).flatten.first.strip.force_encoding('UTF-8') rescue nil
-  end
+    def meshtastic_cli_cmd
+      str = "#{meshtastic_cli_path} --host #{host} --listen"
+      log str, :yellow
+      str
+    end
 
-  def throw_error(line)
-    raise Exception.new(line) if error?(line)
-  end
+    def log(str, color = :black)
+      str = "MessageReceiver: #{str}"
+      $log_it.log str, color
+    end
 
-  def error?(str)
-    str =~ /connection reset by peer/i ||
-    str =~ /broken pipe/i
-  end
+    def get_value(str, key)
+      str.scan(/#{key}: ['"]*(.*?)['"]*([,}\r]|$)/).flatten.first.strip.force_encoding('UTF-8') rescue nil
+    end
 
-  def meshtastic_cli_path
-    Variable.where(name: 'meshtastic_cli_path').first_or_initialize.value
-  end
+    def throw_error(line)
+      raise Exception.new(line) if error?(line)
+    end
 
-  def host
-    Variable.where(name: 'ip_address').first_or_initialize.value
-  end
+    def error?(str)
+      str =~ /connection reset by peer/i ||
+      str =~ /broken pipe/i
+    end
 
-  def broadcast(str)
-    $message_broadcaster.broadcast(message: str)
-  end
+    def meshtastic_cli_path
+      Variable.where(name: 'meshtastic_cli_path').first_or_initialize.value
+    end
 
-  def broadcast_sleep_30_retry(str)
-    broadcast(str)
-    broadcast('Sleeping for 30 seconds...')
-    sleep 30
-    broadcast('Attempting to retry...')
-  end
+    def host
+      Variable.where(name: 'ip_address').first_or_initialize.value
+    end
+
+    def broadcast(str)
+      $message_broadcaster.broadcast(message: str)
+    end
+
+    def broadcast_sleep_30_retry(str)
+      broadcast(str)
+      broadcast('Sleeping for 30 seconds...')
+      sleep 30
+      broadcast('Attempting to retry...')
+    end
 end

@@ -10,28 +10,30 @@ class MessageBroadcaster
     self
   end
 
-  def broadcast_prepend_to(str)
-    Message.new.broadcast_prepend_to('Messages', target: 'messages', html: str_to_li_element(str))
-  end
+  private
 
-  def ch_index_to_channel_name(ch_index)
-    str = ch_index.present? ? channels[ch_index.to_i] : nil
-    "[#{str.strip}]" if str.present?
-  end
+    def broadcast_prepend_to(str)
+      Message.new.broadcast_prepend_to('Messages', target: 'messages', html: str_to_li_element(str))
+    end
 
-  def node_to_name(node)
-    "&lt;#{node.nil? ? 'SYSTEM' : node.name.try(:strip)}&gt;"
-  end
+    def ch_index_to_channel_name(ch_index)
+      str = ch_index.present? ? channels[ch_index.to_i] : nil
+      "[#{str.strip}]" if str.present?
+    end
 
-  def text_to_voice(message, voice)
-    TextToVoice.new(message).voice if voice
-  end
+    def node_to_name(node)
+      "&lt;#{node.nil? ? 'SYSTEM' : node.name.try(:strip)}&gt;"
+    end
 
-  def str_to_li_element(str)
-    LiElement.new("#{str}").render
-  end
+    def text_to_voice(message, voice)
+      TextToVoice.new(message).voice if voice
+    end
 
-  def channels
-    Variable.where(name: 'channels').first_or_initialize.value.split("\n") rescue []
-  end
+    def str_to_li_element(str)
+      LiElement.new("#{str}").render
+    end
+
+    def channels
+      Variable.where(name: 'channels').first_or_initialize.value.split("\n") rescue []
+    end
 end

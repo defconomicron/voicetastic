@@ -38,11 +38,13 @@ class TextToVoice
     "<audio controls autoplay style='width:100%;margin-top:1em'><source src=\"output.mp3?no_cache=#{Time.now.to_i}\" type=\"audio/mp3\"></audio>"
   end
 
-  def google_voice
-    Variable.where(name: 'google_voice').first_or_initialize.value
-  end
+  private
 
-  def broadcast(str)
-    $message_broadcaster.broadcast(message: str)
-  end
+    def google_voice
+      Variable.where(name: 'google_voice').first_or_initialize.value
+    end
+
+    def broadcast(str)
+      $message_broadcaster.broadcast(message: str)
+    end
 end
