@@ -16,11 +16,11 @@ class MessageBroadcaster
 
   def ch_index_to_channel_name(ch_index)
     str = ch_index.present? ? channels[ch_index.to_i] : nil
-    "[#{str}]" if str.present?
+    "[#{str.strip}]" if str.present?
   end
 
   def node_to_name(node)
-    "&lt;#{node.nil? ? 'SYSTEM' : node.name}&gt;"
+    "&lt;#{node.nil? ? 'SYSTEM' : node.name.try(:strip)}&gt;"
   end
 
   def text_to_voice(message, voice)

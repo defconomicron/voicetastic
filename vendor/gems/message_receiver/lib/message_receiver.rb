@@ -77,8 +77,8 @@ class MessageReceiver
     log "Exception: #{e} #{e.backtrace}", :red
     if "#{e}" =~ /No such file or directory/
       broadcast_sleep_30_retry('ERROR: Could not find Meshtastic CLI Path.')
-    elsif "#{e}" =~ /output error @ io_fillbuf/
-      broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
+    # elsif "#{e}" =~ /output error @ io_fillbuf/
+      # broadcast_sleep_30_retry('ERROR: Failed to connect to node at the specified IP address.')
     end
     log 'Restarting due to exception...'
   end

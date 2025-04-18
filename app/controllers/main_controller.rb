@@ -57,7 +57,7 @@ class MainController < ApplicationController
     File.write(path, params[:files].read, mode: 'wb')
     text = VoiceToText.new(path).text
     if text.blank?
-      $message_broadcaster.broadcast(message: 'No voice was detected.')
+      $message_broadcaster.broadcast(message: 'ERROR: No voice was detected.')
     else
       $message_receiver.hold = true
       $message_receiver.kill
