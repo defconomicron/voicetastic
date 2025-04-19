@@ -25,3 +25,13 @@
         
     Mac OS X Installation Instructions:
         https://cloud.google.com/sdk/docs/install#mac
+
+# Git Installation
+    Linux: https://git-scm.com/downloads/linux
+    Windows: https://git-scm.com/downloads/win
+    macOS: https://git-scm.com/downloads/mac
+
+# Ruby Installation
+    https://www.ruby-lang.org/en/downloads/
+
+# Install Voicetastic
