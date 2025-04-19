@@ -19,6 +19,13 @@
 # gcloud CLI Installation
     https://cloud.google.com/sdk/docs/install
 
+# Log into gcloud CLI in Linux / macOS
+    Run command: gcloud auth login
+
+# Set gcloud default project in Linux / macOS
+    Run command: gcloud auth application-default login
+    Select the project you created in the "Google Cloud API Access" section above.
+
 # Git Installation
     https://git-scm.com/downloads
 
@@ -40,11 +47,11 @@
     open http://127.0.0.1:3000
 
 # Configure Voicetastic
-    open http://127.0.0.1:3000
-    Click the hamburger icon at top right
-    Select desired voice to use
-    Input the IP Address of your node
-    Input your node's Long Name
-    Input Meshtastic CLI path (typically meshtastic)
-    Input Max Text Length (229 is recommended)
-    Input channel names that your node is on. (One channel name per line)
+    1. open http://127.0.0.1:3000
+    2. Click the hamburger icon at top right
+    3. Select desired voice to use
+    4. Input the IP Address of your node
+    5. Input your node's Long Name
+    6. Input Meshtastic CLI path (typically meshtastic)
+    7. Input Max Text Length (229 is recommended)
+    8. Input channel names that your node is on. (One channel name per line)
