@@ -33,6 +33,7 @@
 
 # Ruby Installation
     https://www.ruby-lang.org/en/downloads/
+    Recommended version of Ruby: 3.3.6
 
 # Install Meshtastic CLI
     https://meshtastic.org/docs/software/python/cli/installation/
