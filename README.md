@@ -20,11 +20,13 @@
     https://cloud.google.com/sdk/docs/install
 
 # Log into gcloud CLI in Linux / macOS
-    Run command: gcloud auth login
+    Run console command: gcloud auth login
+    Your web browser should open and be taken to log into your Google Cloud account
 
 # Set gcloud default project in Linux / macOS
-    Run command: gcloud auth application-default login
-    Select the project you created in the "Google Cloud API Access" section above.
+    Run console command: gcloud auth application-default login
+    A list of projects should appear in the console.
+    Select the project name you created from the list.
 
 # Git Installation
     https://git-scm.com/downloads
