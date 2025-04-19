@@ -1,20 +1,20 @@
 # Google Cloud
-    # Navigate to https://console.cloud.google.com/
-    # Press CTRL + O
-    # Click "NEW PROJECT" link
-    # Name your project and click the CREATE button
-    # Click "SELECT PROJECT" link
-    # You should be on your newly created project
-    # Click the hamburger icon at the top left
-    # Hover over "APIs & Services"
-    # Click "Library"
-    # Search for "Text to Speech"
-    # Click "Cloud Text-to-Speech API"
-    # Click "ENABLE"
-    # Click "Library"
-    # Search for "Speech to Text"
-    # Click "Cloud Speech-to-Text API"
-    # Click "ENABLE"
+    1. Navigate to https://console.cloud.google.com/
+    2. Press CTRL + O
+    3. Click "NEW PROJECT" link
+    4. Name your project and click the CREATE button
+    5. Click "SELECT PROJECT" link
+    6. You should be on your newly created project
+    7. Click the hamburger icon at the top left
+    8. Hover over "APIs & Services"
+    9. Click "Library"
+    10. Search for "Text to Speech"
+    11. Click "Cloud Text-to-Speech API"
+    12. Click "ENABLE"
+    13. Click "Library"
+    14. Search for "Speech to Text"
+    15. Click "Cloud Speech-to-Text API"
+    16. Click "ENABLE"
     
 # Linux Installation Instructions
     Install gcloud CLI: https://cloud.google.com/sdk/docs/install#linux
