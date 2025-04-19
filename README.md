@@ -1,4 +1,4 @@
-# Google Cloud
+# Google Cloud API Access
     1. Navigate to https://console.cloud.google.com/
     2. Press CTRL + O
     3. Click "NEW PROJECT" link
@@ -15,12 +15,13 @@
     14. Search for "Speech to Text"
     15. Click "Cloud Speech-to-Text API"
     16. Click "ENABLE"
-    
-# Linux Installation Instructions
-    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#linux
 
-# Windows 10 Installation Instructions
-    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#windows
-
-# Mac OS X Installation Instructions
-    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#mac
+# gcloud CLI Installation
+    Linux Installation Instructions:
+        https://cloud.google.com/sdk/docs/install#linux
+        
+    Windows 10 Installation Instructions:
+        https://cloud.google.com/sdk/docs/install#windows
+        
+    Mac OS X Installation Instructions:
+        https://cloud.google.com/sdk/docs/install#mac
