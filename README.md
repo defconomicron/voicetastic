@@ -34,4 +34,26 @@
 # Ruby Installation
     https://www.ruby-lang.org/en/downloads/
 
+# Install Meshtastic CLI
+
+
 # Install Voicetastic
+    git clone git@github.com:defconomicron/voicetastic.git
+    cd voicetastic
+    bundle
+    rake db:migrate
+
+# Start up Voicetastic
+    cd voicetastic
+    rails server
+    open http://127.0.0.1:3000
+
+# Configure Voicetastic
+    open http://127.0.0.1:3000
+    Click the hamburger icon at top right
+    Select desired voice to use
+    Input the IP Address of your node
+    Input your node's Long Name
+    Input Meshtastic CLI path (typically meshtastic)
+    Input Max Text Length (229 is recommended)
+    Input channel names that your node is on. (One channel name per line)
