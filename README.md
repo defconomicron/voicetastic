@@ -1,8 +1,8 @@
 # Linux Installation Instructions
-    TODO:
+    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#linux
 
 # Windows 10 Installation Instructions
-    TODO:
+    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#windows
 
 # Mac OS X Installation Instructions
-    TODO:
+    Install gcloud CLI: https://cloud.google.com/sdk/docs/install#mac
