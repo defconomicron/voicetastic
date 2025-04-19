@@ -17,25 +17,16 @@
     16. Click "ENABLE"
 
 # gcloud CLI Installation
-    Linux Installation Instructions:
-        https://cloud.google.com/sdk/docs/install#linux
-        
-    Windows 10 Installation Instructions:
-        https://cloud.google.com/sdk/docs/install#windows
-        
-    Mac OS X Installation Instructions:
-        https://cloud.google.com/sdk/docs/install#mac
+    https://cloud.google.com/sdk/docs/install
 
 # Git Installation
-    Linux: https://git-scm.com/downloads/linux
-    Windows: https://git-scm.com/downloads/win
-    macOS: https://git-scm.com/downloads/mac
+    https://git-scm.com/downloads
 
 # Ruby Installation
     https://www.ruby-lang.org/en/downloads/
 
 # Install Meshtastic CLI
-
+    https://meshtastic.org/docs/software/python/cli/installation/
 
 # Install Voicetastic
     git clone git@github.com:defconomicron/voicetastic.git
