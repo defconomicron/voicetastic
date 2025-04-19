@@ -1,8 +1,8 @@
-Linux Installation Instructions
+# Linux Installation Instructions
     TODO:
 
-Windows 10 Installation Instructions
+# Windows 10 Installation Instructions
     TODO:
 
-Mac OS X Installation Instructions
+# Mac OS X Installation Instructions
     TODO:
